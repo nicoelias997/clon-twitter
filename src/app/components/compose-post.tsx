@@ -1,5 +1,8 @@
 import { Avatar } from "@nextui-org/react"
-import { createClient } from "../utils/supabase/client"
+import { createClient } from "../utils/supabase/server"
+import { revalidatePath } from "next/cache"
+import { ComposePostTextArea } from "./compose-post-textarea"
+import { ComposePostButton } from "./compose-post-button"
 
 export function ComposePost ({
   avatarUrl
@@ -18,6 +21,7 @@ export function ComposePost ({
     if (user === null) return
 
     await supabase.from('posts').insert({ content, user_id: user.id })
+    revalidatePath('/')
   }
   return (
     <form
@@ -31,17 +35,8 @@ export function ComposePost ({
         ></Avatar>
       </div>
       <div className="flex flex-1 flex-col gap-y-4">
-        <textarea
-          name="content"
-          rows={4}
-          className="w-full text-2xl bg-black placeholder-gray-500 p-2"
-          placeholder="¿Que esta pasando?"
-          ></textarea>
-        <button
-          type="submit"
-          className="bg-sky-500 text-sml font-bold rounded-full px-5 py-2 self-end">
-          Postear
-        </button>
+        <ComposePostTextArea></ComposePostTextArea>
+        <ComposePostButton></ComposePostButton>
       </div>
     </form>
   )
