@@ -25,7 +25,7 @@ export function ComposePostTextArea () {
       name="content"
       rows={4}
       className="w-full text-2xl bg-black placeholder-gray-500 p-2"
-      placeholder="¿Que esta pasando?"
+      placeholder="¿Qué esta pasando?"
     ></textarea>
   )
 }
