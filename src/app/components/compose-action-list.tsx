@@ -15,7 +15,7 @@ export function ActionList({
       }
       className={ className }
       itemClasses={{
-        base: "items-center gap-4 mt-4 shadow-none bg-transparent hover:bg-slate-800 hover:rounded-medium rounded-medium cursor-pointer",
+        base: "items-center gap-4 mt-4 shadow-none bg-transparent hover:bg-slate-800 hover:rounded-medium rounded-medium cursor-pointer icon-only",
       }}
     >
       <ListboxItem
@@ -35,7 +35,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Inicio</span>
+        <span className="flex items-center text-2xl font-semibold text-only">Inicio</span>
       </ListboxItem>
       <ListboxItem
         key="notifications"
@@ -45,7 +45,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Notificaciones</span>
+        <span className="flex items-center text-2xl font-semibold text-only">Notificaciones</span>
       </ListboxItem>
       <ListboxItem
         key="search"
@@ -55,7 +55,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Explorar</span>
+        <span className="flex items-center text-2xl font-semibold text-only">Explorar</span>
       </ListboxItem>
       <ListboxItem
         key="messages"
@@ -66,7 +66,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Mensajes</span>
+        <span className="flex items-center text-2xl font-semibold text-only">Mensajes</span>
       </ListboxItem>
       <ListboxItem
         key="favorites"
@@ -76,7 +76,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Favoritos</span>
+        <span className="flex items-center text-2xl font-semibold text-only">Favoritos</span>
       </ListboxItem>
       <ListboxItem
         key="premium"
@@ -86,7 +86,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Premium</span>
+        <span className="flex items-center text-2xl font-semibold text-only">Premium</span>
       </ListboxItem>
       <ListboxItem
         key="profile"
@@ -96,7 +96,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Perfil</span>
+        <span className="flex items-center text-2xl font-semibold text-only">Perfil</span>
       </ListboxItem>
       <ListboxItem
         key="config"
@@ -106,7 +106,7 @@ export function ActionList({
           </IconWrapper>
          }
       >
-        <span className="flex items-center text-2xl font-semibold">Configuración</span>
+    <span className="flex items-center text-2xl font-semibold text-only">Configuración</span>
       </ListboxItem>
     </Listbox>
   )

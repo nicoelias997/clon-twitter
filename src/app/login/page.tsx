@@ -11,10 +11,12 @@ export default function Login () {
         ></Image>
       </div>
       <div className="flex flex-col justify-center items-center min-h-screen">
-        <h1 className="text-xl font-bold mb-4">
-          Inicia sesión
-        </h1>
-        <AuthButtonServer></AuthButtonServer>
+        <div>
+          <h1 className="text-xl font-bold mb-4">
+            Inicia sesión
+          </h1>
+          <AuthButtonServer></AuthButtonServer>
+        </div>
       </div>
       <FooterLogin></FooterLogin>
     </div>

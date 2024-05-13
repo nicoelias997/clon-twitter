@@ -31,3 +31,14 @@ body {
     text-wrap: balance;
   }
 }
+/* Estilo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .text-only {
+    display: none; /* Ocultar texto en pantallas pequeñas */
+  }
+}
+
+/* Estilo para pantallas grandes */
+@media (min-width: 769px) {
+ 
+}

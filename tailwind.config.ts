@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss"
 import { nextui } from "@nextui-org/react"
 
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,7 +17,11 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))"
       }
-    }
+    },
+    screens: {
+      'xs': '400px',
+      ...defaultTheme.screens,
+    },
   },
   darkMode: "class",
   plugins: [nextui()]
