@@ -52,7 +52,7 @@ export default async function MyProfile () {
       <button onClick={handleProfileEdit} className="bg-blue-500 text-white py-2 px-4 rounded-lg mb-4">Editar Perfil</button>
 
       {/* Nombre de usuario */}
-      <div className="text-lg font-bold mb-2">{user.username}</div>
+      {/* <div className="text-lg font-bold mb-2">{user.username}</div> */}
 
       {/* Link de GitHub */}
       <div className="text-blue-500 mb-2">

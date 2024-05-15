@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
+import React from "react"
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react"
 
 export default function CardSubscription() {
   return (
@@ -20,5 +20,5 @@ export default function CardSubscription() {
         </button>
       </CardFooter>
     </Card>
-  );
+  )
 }
