@@ -42,3 +42,13 @@ body {
 @media (min-width: 769px) {
  
 }
+.sticky-container {
+  position: -webkit-sticky; /* Para Safari */
+  position: sticky;
+  top: 0;
+  bottom: 0;
+}
+
+.sticky-stop {
+  position: relative;
+}

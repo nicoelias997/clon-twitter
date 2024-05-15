@@ -27,7 +27,7 @@ export function ComposeLogoutButton ({
 
   return (
       <Dropdown placement="bottom-end" className={ className }>
-        <DropdownTrigger>
+        <DropdownTrigger className="hidden lg:flex">
           <Button
             className="items-center shadow-none bg-black py-4 gap-y-2 bg-transparent hover:bg-slate-800 hover:rounded-medium"
           >
