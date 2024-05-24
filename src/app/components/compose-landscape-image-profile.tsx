@@ -1,11 +1,10 @@
-import React from "react";
-import {Image} from "@nextui-org/react";
+import React from "react"
 
 export default function LandscapeProfile({
-    landscape_url
+  landscape_url
 }:
 {
-    landscape_url?: string
+  landscape_url?: string
 }) {
   return (
     <img
@@ -13,5 +12,5 @@ export default function LandscapeProfile({
       src={landscape_url}
       className="min-w-screen w-full border-none radius-none max-h-[35vh] "
     />
-  );
+  )
 }

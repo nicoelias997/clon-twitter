@@ -3,15 +3,30 @@
 import React from "react"
 import { Listbox, ListboxItem } from "@nextui-org/react"
 import { SearchIcon, IconWrapper, ItemCounter, SettingIcon, TwitterIcon, HouseIcon, BellIcon, MailIcon, StarIcon, UserIcon, XIcon } from "./icons"
+import { useRouter } from "next/navigation"
+
 export function ActionList({
-  className
+  className,
+  username
 }: {
   className?: string
+  username?: string
 }) {
+  const router = useRouter()
+
+  const go = (key: string | number) => {
+    if (key === 'home' || key === 'twitter') {
+      router.push('/')
+    } else if (key === 'profile') {
+      router.push(`/${username}`)
+    } else {
+      router.push(`/${key}`)
+    }
+  }
   return (
     <Listbox
       aria-label="Action list from clon-x"
-      onAction={ (key) => { alert(key) }
+      onAction={ (key) => { go(key) }
       }
       className={ className }
       itemClasses={{

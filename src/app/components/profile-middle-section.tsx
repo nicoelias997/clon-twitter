@@ -11,11 +11,10 @@ import AnswerSection from '../components/profile-answers-section'
 
 export const dynamic = 'force-dynamic'
 export default async function ProfileMiddleSection () {
-
   const [activeTab, setActiveTab] = useState('posts')
 
   const handleTabClick = (tab?: string | undefined) => {
-    if(tab){
+    if (tab) {
       setActiveTab(tab)
     } else {
       setActiveTab('posts')
@@ -30,18 +29,19 @@ export default async function ProfileMiddleSection () {
     .select('*')
     .eq('username', pathname)
     .single()
-  
-    const { data: posts } = await supabase.from('posts')
-    .select('*, users(*)')
+
+  const { data: posts } = await supabase.from('posts')
+    .select('*, users(*), likes(*), retposts(*), favorites(*)')
     .eq('user_id', user?.id)
     .order('created_at', { ascending: false })
-    
+    .is('response_id', null)
+
   const handleProfileEdit = () => {
     console.log("hola")
   }
   const landscape_url = "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-  
-// Las respuestas se veran reflejadas como relacion 1 a muchas desde un tweet a otro tw, pero como respuesta o algo asi.  
+
+  // Las respuestas se veran reflejadas como relacion 1 a muchas desde un tweet a otro tw, pero como respuesta o algo asi.
   return (
       <section className='max-w-[800px] w-full mx-auto border-l border-r border-white/10 min-h-screen'>
         <div className="flex flex-row gap-x-6 py-2 justify-start items-center h-[8vh] border-b border-white/20">
@@ -59,17 +59,17 @@ export default async function ProfileMiddleSection () {
         </div>
         <div className='flex flex-row justify-between h-[12vh] mb-2'>
           {/* Imagen de perfil */}
-          <img 
-            src={user?.avatar_url} 
-            alt="Profile Pic" 
+          <img
+            src={user?.avatar_url}
+            alt="Profile Pic"
             className="w-40 h-40 rounded-full object-cover border border-4 border-black relative ml-4 -top-[12vh] "/>
              {/* Botón de editar perfil */}
-            <Button 
-              onClick={handleProfileEdit} 
-              variant="bordered" 
+            <Button
+              onClick={handleProfileEdit}
+              variant="bordered"
               className="bg-black text-white py-1 px-5 rounded-full border border-white mr-4 mt-4 font-semibold text-md">
               Editar Perfil
-            </Button>  
+            </Button>
         </div>
         <div className="flex flex-col items-start ml-4">
           {/* Nombre de usuario */}
@@ -77,8 +77,8 @@ export default async function ProfileMiddleSection () {
           <span className="text-md text-default-400 mb-2">@{user?.username}</span>
           <span className="text-md text-default-400 mb-2">Descripcion de lo que quieras decir sobre tu perfil</span>
           <div className='flex flex-row justify-evenly mb-1'>
-            <p  className="text-md text-default-400">Pais: Argentina</p>
-            <a  className="text-md text-default-400" href="#">Github</a>
+            <p className="text-md text-default-400">Pais: Argentina</p>
+            <a className="text-md text-default-400" href="#">Github</a>
           </div>
           <div className='flex flex-row justify-evenly text-md text-default-400 mb-3'>
             <span className='mr-2'>Fecha de pumpeaños</span>
@@ -90,34 +90,34 @@ export default async function ProfileMiddleSection () {
           </div>
         </div>
         <div className='flex flex-row justify-evenly'>
-        <Button 
-          variant="light" 
+        <Button
+          variant="light"
           className={`w-[25%] bg-black border-none text-white rounded-none py-1 px-5 mr-4 mt-4 font-semibold text-md `}
-          onClick={() => handleTabClick('posts')}>
+          onClick={() => { handleTabClick('posts') }}>
           <span className={`${activeTab === 'posts' ? 'border-b-4 border-sky-500' : ''}`}>Posts</span>
         </Button>
-        <Button 
-          variant="light" 
+        <Button
+          variant="light"
           className={`w-[25%] bg-black border-none text-white rounded-none py-1 px-5 mr-4 mt-4 font-semibold text-md ${activeTab === 'response' ? 'focus:border-b-4 focus:border-sky-500' : ''}`}
-          onClick={() => handleTabClick('response')}>
+          onClick={() => { handleTabClick('response') }}>
           <span className={`${activeTab === 'response' ? 'border-b-4 border-sky-500' : ''}`}>Respuesta</span>
         </Button>
-        <Button 
-          variant="light" 
+        <Button
+          variant="light"
           className={`w-[25%] bg-black border-none text-white rounded-none py-1 px-5 mr-4 mt-4 font-semibold text-md ${activeTab === 'retweets' ? 'focus:border-b-4 focus:border-sky-500' : ''}`}
-          onClick={() => handleTabClick('retweets')}>
+          onClick={() => { handleTabClick('retweets') }}>
           <span className={`${activeTab === 'retweets' ? 'border-b-4 border-sky-500' : ''}`}>Retweets</span>
         </Button>
-        <Button 
-          variant="light" 
+        <Button
+          variant="light"
           className={`w-[25%] bg-black border-none text-white rounded-none py-1 px-5 mr-4 mt-4 font-semibold text-md ${activeTab === 'likes' ? 'focus:border-b-4 focus:border-sky-500' : ''}`}
-          onClick={() => handleTabClick('likes')}>
+          onClick={() => { handleTabClick('likes') }}>
           <span className={`${activeTab === 'likes' ? 'border-b-4 border-sky-500' : ''}`}>Me gusta</span>
         </Button>
         </div>
         <div className='mt-2 border-b border-t border-white/20'>
         {activeTab === 'posts' ? (<PostLists posts={posts}></PostLists>) : null}
-        {activeTab === 'response' ? (<AnswerSection landscape_url={landscape_url}></AnswerSection>) : null}
+        {activeTab === 'response' ? (<AnswerSection></AnswerSection>) : null}
         </div>
         </section>
   )

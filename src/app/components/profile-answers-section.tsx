@@ -1,14 +1,5 @@
-export default function AnswerSection({
-    landscape_url
-}:
-{
-    landscape_url?: string
-}) {
+export default function AnswerSection() {
   return (
-    <img
-      alt="NextUI hero Image"
-      src={landscape_url}
-      className="min-w-screen w-full border-none radius-none max-h-[35vh] "
-    />
-  );
+    <h1>Se tiene que mostrar estooooo</h1>
+  )
 }

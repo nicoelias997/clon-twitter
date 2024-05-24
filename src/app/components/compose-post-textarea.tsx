@@ -2,7 +2,11 @@
 
 import { useEffect, useRef } from "react"
 import { useFormStatus } from "react-dom"
-export function ComposePostTextArea () {
+export function ComposePostTextArea ({
+  placeholder
+}: {
+  placeholder: string
+}) {
   const { pending } = useFormStatus()
   const alreadySent = useRef(false)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
@@ -25,7 +29,7 @@ export function ComposePostTextArea () {
       name="content"
       rows={4}
       className="w-full text-2xl bg-black placeholder-gray-500 p-2"
-      placeholder="¿Qué esta pasando?"
+      placeholder={placeholder}
     ></textarea>
   )
 }

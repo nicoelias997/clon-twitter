@@ -4,7 +4,7 @@ import { Card, CardHeader, CardBody, CardFooter, Avatar, Link } from "@nextui-or
 import { InteractionPostButtons } from "./compose-interaction-buttons"
 import { type LikeEntity, type FavoriteEntity, type RetpostEntity } from "../types/posts"
 
-export default function PostCard({
+export default function MessageCard({
   userFullName,
   userName,
   avatarUrl,
