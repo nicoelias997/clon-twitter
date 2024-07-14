@@ -1,13 +1,13 @@
-import { type Chat } from "../types/messages"
+import { type ChatParticipantsEntity } from "../types/messages"
 import ChatCard from "./chat-card"
 
 export function ChatLists ({
-  chats,
+  chats_participants,
   userName,
   userFullName,
   avatarUrl,
 }: {
-  chats: Chat[] | null
+  chats_participants: ChatParticipantsEntity[] | null
   userName: string
   userFullName: string
   avatarUrl: string
@@ -15,21 +15,23 @@ export function ChatLists ({
   return (
     <>
       {
-        chats?.map(chats => {
+        chats_participants?.map(chat => {
           const {
             id,
+            user_id,
+            chat_id, 
             created_at,
-          } = chats
+          } = chat
+          // const {
+          //   chats_messages
+          // } = chat.chats
+          // console.log(chat.chats.chats_messages)
           return (
             <ChatCard
               key={id}
-              chat_id={id}
+              chat_id={chat_id}
               created_at={created_at}
-              // key={chatId}
-              // chat_id={chatId}
-              // user_id={user_id}
-              // chats_messages={chatMessages}
-              // created_at={chatCreatedAt}
+              user_id={user_id}
               userName={userName}
               userFullName={userFullName}
               avatarUrl={avatarUrl}

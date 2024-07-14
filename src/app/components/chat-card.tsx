@@ -6,18 +6,14 @@ import { Card, CardHeader, CardBody, CardFooter, Avatar, Link } from "@nextui-or
 
 export default function ChatCard({
   chat_id,
-  // user_id,
+  user_id,
   created_at,
-  // chats,
-  // chats_messages,
   userFullName,
   userName,
   avatarUrl,
 }: {
   chat_id: string
-  // user_id: string
-  // chats_messages: MessagesEntity[]
-  // chats: Chat[]
+  user_id: string
   created_at: string
   userFullName: string
   userName: string

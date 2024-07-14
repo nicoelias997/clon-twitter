@@ -18,13 +18,12 @@ export default async function ChatMiddleSection ({
 
   // const chatIds = chatParticipants?.map(participant => participant.chat_id)
 
-  const { data: chats } = await supabase
-    .from('chats')
-    .select('*, chats_participants(*), chats_messages(*)')
+  const { data: chats_participants } = await supabase
+    .from('chats_participants')
+    .select('*, chats(*, chats_messages(*))')
     .eq('user_id', user?.id)
 
-  console.log(chats)
-
+  // console.log(chats_participants)
   return (
     <section className='max-w-[800px] w-full mx-auto border-l border-r border-white/10 min-h-screen sticky top-0 overflow-y-auto'>
       <div className="flex flex-row gap-x-4 justify-start items-center h-[6vh] border-b border-white/20">
@@ -40,7 +39,7 @@ export default async function ChatMiddleSection ({
           <ChatLists userName={user?.user_metadata?.userName} avatarUrl={user?.user_metadata?.avatar_url} userFullName={user?.user_metadata?.userFullName} chats={chats}/>
         </>
       )} */}
-        <ChatLists userName={user?.user_metadata?.userName} avatarUrl={user?.user_metadata?.avatar_url} userFullName={user?.user_metadata?.userFullName} chats={chats}/>
+        <ChatLists userName={user?.user_metadata?.user_name} avatarUrl={user?.user_metadata?.avatar_url} userFullName={user?.user_metadata?.name} chats_participants={chats_participants}/>
         {/* <>
         <h1 className="ml-2">
           No has iniciado ningun chat

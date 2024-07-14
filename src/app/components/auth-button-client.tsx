@@ -15,12 +15,18 @@ export function AuthButtonClient ({ user }: { user: User | null }) {
   // const [session, setSession] = useState<Session | null >(null)
 
   const handleSignIn = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: 'http://localhost:3000/auth/callback'
-      }
-    })
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: 'http://localhost:3000/auth/callback'
+        }
+      })
+      
+      if (error) throw error
+    } catch (error) {
+      console.error('Error during sign in:', error)
+    }
   }
   const handleSignOut = async () => {
     await supabase.auth.signOut()
