@@ -1,7 +1,7 @@
-import { type Post } from "../types/posts"
+import { type EnhancedPost } from "../types/posts"
 import PostCard from "./post-card"
 
-export function PostLists ({ posts }: { posts: Post[] | null }) {
+export function PostLists ({ posts }: { posts: EnhancedPost[] | null }) {
   return (
     <>
     {
@@ -10,10 +10,13 @@ export function PostLists ({ posts }: { posts: Post[] | null }) {
           id,
           users,
           content,
-          response_id,
-          likes,
-          favorites,
-          retposts,
+          hasLiked,
+          hasFavorited,
+          hasRetposted,
+          likesCount,
+          favoritesCount,
+          retpostsCount,
+          responsesCount,
         } = post
         const {
           username: userName,
@@ -25,14 +28,17 @@ export function PostLists ({ posts }: { posts: Post[] | null }) {
         <PostCard
           key={id}
           postId={id}
-          response_id={response_id}
           userName={userName}
           userFullName={userFullName}
           avatarUrl={avatarUrl}
           content={content}
-          likes={likes}
-          favorites={favorites}
-          retposts={retposts}
+          hasLiked={hasLiked}
+          hasFavorited={hasFavorited}
+          hasRetposted={hasRetposted}
+          likesCount={likesCount}
+          favoritesCount={favoritesCount}
+          retpostsCount={retpostsCount}
+          responsesCount={responsesCount}
         >
         </PostCard>
         )

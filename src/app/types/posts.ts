@@ -13,5 +13,16 @@ export type Post = PostEntity & {
   retposts: RetpostEntity[]
 }
 
+// Enhanced post with pre-computed interaction data (avoids N+1 queries)
+export type EnhancedPost = Post & {
+  responsesCount: number
+  hasLiked: boolean
+  hasFavorited: boolean
+  hasRetposted: boolean
+  likesCount: number
+  favoritesCount: number
+  retpostsCount: number
+}
+
 // Export the entity types
 export type { LikeEntity, FavoriteEntity, RetpostEntity }

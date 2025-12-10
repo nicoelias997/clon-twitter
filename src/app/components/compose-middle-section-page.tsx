@@ -1,11 +1,8 @@
-// 'use client'
-
-// import React, { useEffect, useState } from "react"
 import { ComposePost } from "./compose-post"
-import { PostLists } from "./post-list"
-import { createClient } from "../utils/supabase/client"
+import { PostsListWithRealtime } from "./posts-list-with-realtime"
+import { createClient } from "../utils/supabase/server"
 import React from "react"
-// import { Loading } from "./compose-loading"
+import type { EnhancedPost, Post } from "../types/posts"
 
 export default async function MiddleSection ({
   avatar_url,
@@ -14,40 +11,42 @@ export default async function MiddleSection ({
   avatar_url?: string
   username?: string
 }) {
-  // const [posts, setPosts] = useState(null)
-  // const [loading, setLoading] = useState(true)
   const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  // useEffect(() => {
-  //   async function fetchPosts() {
-  //     const { data: posts } = await supabase
-  //       .from('posts')
-  //       .select('*, users(*), likes(*), favorites(*), retposts(*)')
-  //       .order('created_at', { ascending: false })
-  //       .is('response_id', null)
-
-  //     setPosts(posts)
-  //     setLoading(false)
-  //   }
-
-  //   fetchPosts()
-  // }, [supabase])
+  // Fetch posts with related data
   const { data: posts } = await supabase
     .from('posts')
-    .select('*, users(*), likes(*), favorites(*), retposts(*)')
+    .select('*, users(*), likes(id, user_id), retposts(id, user_id), favorites(id, user_id)')
     .order('created_at', { ascending: false })
     .is('response_id', null)
-  // if (loading) {
-  //   return (
-  //   <section className='max-w-[800px] w-full mx-auto border-l border-r border-white/10 min-h-screen sticky top-0 overflow-y-auto'>
-  //     <Loading />
-  //   </section>
-  //   )
-  // }
+
+  // Enhance posts with computed data (eliminates N+1 queries!)
+  const enhancedPosts: EnhancedPost[] = await Promise.all(
+    (posts as Post[] || []).map(async (post) => {
+      // Count responses for this post
+      const { count: responsesCount } = await supabase
+        .from('posts')
+        .select('*', { count: 'exact', head: true })
+        .eq('response_id', post.id)
+
+      return {
+        ...post,
+        responsesCount: responsesCount || 0,
+        hasLiked: post.likes?.some(l => l.user_id === user?.id) || false,
+        hasFavorited: post.favorites?.some(f => f.user_id === user?.id) || false,
+        hasRetposted: post.retposts?.some(r => r.user_id === user?.id) || false,
+        likesCount: post.likes?.length || 0,
+        favoritesCount: post.favorites?.length || 0,
+        retpostsCount: post.retposts?.length || 0,
+      }
+    })
+  )
+
   return (
   <section className='max-w-[800px] w-full mx-auto border-l border-r border-white/10 min-h-screen sticky top-0 overflow-y-auto'>
     <ComposePost placeholder="¿Qué esta pasando?" responseId={null} avatarUrl={avatar_url} username={username}></ComposePost>
-    <PostLists posts={posts}></PostLists>
+    <PostsListWithRealtime initialPosts={enhancedPosts} userId={user?.id || ''} />
   </section>
   )
 }

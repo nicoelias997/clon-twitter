@@ -1,7 +1,7 @@
 import React from "react"
 import { ComposePost } from "./compose-post"
 import { PostLists } from "./post-list"
-import { createClient } from "../utils/supabase/client"
+import { createClient } from "../utils/supabase/server"
 import { ArrowLeftIcon } from "./icons"
 
 export default async function UniquePost ({

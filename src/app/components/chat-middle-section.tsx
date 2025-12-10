@@ -1,5 +1,5 @@
 import React from "react"
-import { createClient } from "../utils/supabase/client"
+import { createClient } from "../utils/supabase/server"
 import { ArrowLeftIcon } from "./icons"
 import { ChatLists } from "./chat-list"
 import { type User } from "@supabase/supabase-js"

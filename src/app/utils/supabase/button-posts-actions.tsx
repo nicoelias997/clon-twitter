@@ -24,7 +24,7 @@ export const addPost = async (formData: FormData, responseId: string | null) => 
 export const handleLike = async (postId: string) => {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
+  if (!user) throw new Error('Usuario no autenticado')
 
   try {
     // Verificar si el usuario ya dio like al post
@@ -48,15 +48,21 @@ export const handleLike = async (postId: string) => {
         .insert([{ post_id: postId, user_id: user.id }])
         .select()
     }
+
+    // Revalidate paths where this post might appear
+    revalidatePath('/')
+    revalidatePath('/[username]', 'page')
+    revalidatePath('/[username]/[postId]', 'page')
   } catch (error) {
     console.error('Error al manejar el "me gusta" del post', error)
+    throw error
   }
 }
 
 export const handleRetpost = async (postId: string) => {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
+  if (!user) throw new Error('Usuario no autenticado')
 
   try {
     // Verificar si el usuario ya hizo retweet al post
@@ -80,15 +86,20 @@ export const handleRetpost = async (postId: string) => {
         .insert([{ post_id: postId, user_id: user.id }])
         .select()
     }
+
+    revalidatePath('/')
+    revalidatePath('/[username]', 'page')
+    revalidatePath('/[username]/[postId]', 'page')
   } catch (error) {
     console.error('Error al manejar el retweet del post', error)
+    throw error
   }
 }
 
 export const handleFavorite = async (postId: string) => {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
+  if (!user) throw new Error('Usuario no autenticado')
 
   try {
     // Verificar si el usuario ya marcó como favorito el post
@@ -112,7 +123,12 @@ export const handleFavorite = async (postId: string) => {
         .insert([{ post_id: postId, user_id: user.id }])
         .select()
     }
+
+    revalidatePath('/')
+    revalidatePath('/[username]', 'page')
+    revalidatePath('/[username]/[postId]', 'page')
   } catch (error) {
     console.error('Error al manejar el favorito del post', error)
+    throw error
   }
 }
