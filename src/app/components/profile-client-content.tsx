@@ -2,7 +2,7 @@
 
 import { Button } from '@nextui-org/react'
 import { useState } from 'react'
-import { PostLists } from './post-list'
+import { ProfilePostsListWithRealtime } from './profile-posts-list-with-realtime'
 import { ArrowLeftIcon } from './icons'
 import LandscapeProfile from './compose-landscape-image-profile'
 import type { EnhancedPost } from '../types/posts'
@@ -16,12 +16,14 @@ export default function ProfileClientContent({
   responses,
   retweets,
   likedPosts,
+  userId,
 }: {
   user: UserEntity | null
   posts: EnhancedPost[]
   responses: EnhancedPost[]
   retweets: EnhancedPost[]
   likedPosts: EnhancedPost[]
+  userId: string
 }) {
   const [activeTab, setActiveTab] = useState('posts')
 
@@ -155,10 +157,11 @@ export default function ProfileClientContent({
 
       {/* Content based on active tab */}
       <div className='mt-2 border-b border-t border-white/20'>
-        {activeTab === 'posts' && <PostLists posts={posts} />}
-        {activeTab === 'response' && <PostLists posts={responses} />}
-        {activeTab === 'retweets' && <PostLists posts={retweets} />}
-        {activeTab === 'likes' && <PostLists posts={likedPosts} />}
+        <ProfilePostsListWithRealtime
+          initialData={{ posts, responses, retweets, likedPosts }}
+          userId={userId}
+          activeTab={activeTab as 'posts' | 'response' | 'retweets' | 'likes'}
+        />
       </div>
     </section>
   )

@@ -127,6 +127,7 @@ export const handleFavorite = async (postId: string) => {
     revalidatePath('/')
     revalidatePath('/[username]', 'page')
     revalidatePath('/[username]/[postId]', 'page')
+    revalidatePath('/favorites')
   } catch (error) {
     console.error('Error al manejar el favorito del post', error)
     throw error

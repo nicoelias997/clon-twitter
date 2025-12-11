@@ -1,11 +1,8 @@
-import { Avatar, Link } from "@nextui-org/react"
-import { ComposePostTextArea } from "./compose-post-textarea"
-import { ComposePostButton } from "./compose-post-button"
 import { createClient } from "../utils/supabase/server"
 import { revalidatePath } from "next/cache"
-// import { addPost } from "../utils/supabase/button-posts-actions"
+import { ComposePostClient } from "./compose-post-client"
 
-export function ComposePost ({
+export async function ComposePost ({
   avatarUrl,
   username,
   placeholder,
@@ -16,7 +13,11 @@ export function ComposePost ({
   placeholder: string
   responseId: string | null
 }) {
-  const addPost = async (formData: FormData) => {
+  // Get current user for client component
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const addPostAction = async (formData: FormData) => {
     'use server'
     const content = formData.get('content')
     if (content === null) return
@@ -32,24 +33,16 @@ export function ComposePost ({
     })
     revalidatePath('/')
   }
+
   return (
-    <form
-        action={addPost}
-        className="flex flex-row p-4 border-b border-t border-white/10">
-      <div className="flex flex-start gap-x-2 py-2">
-        <Link href={`/${username}`}
-        className="items-start">
-          <Avatar
-            radius="full"
-            size="md"
-            src={ avatarUrl }
-          ></Avatar>
-        </Link>
-      </div>
-      <div className="flex flex-1 flex-col gap-y-4">
-        <ComposePostTextArea placeholder={placeholder}></ComposePostTextArea>
-        <ComposePostButton></ComposePostButton>
-      </div>
-    </form>
+    <ComposePostClient
+      avatarUrl={avatarUrl || user?.user_metadata?.avatar_url}
+      username={username || user?.user_metadata?.user_name}
+      name={user?.user_metadata?.name}
+      userId={user?.id || ''}
+      placeholder={placeholder}
+      responseId={responseId}
+      addPostAction={addPostAction}
+    />
   )
 }

@@ -81,6 +81,7 @@ export default async function ProfileMiddleSection({ username }: { username: str
       responses={enhancedResponses}
       retweets={enhancedRetweets}
       likedPosts={enhancedLikedPosts}
+      userId={currentUser?.id || ''}
     />
   )
 }

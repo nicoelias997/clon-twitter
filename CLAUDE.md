@@ -36,7 +36,7 @@ npm run gen:types
 
 **Auth Flow:**
 1. OAuth callback handled by `src/app/auth/callback/route.ts` - exchanges code for session
-2. Middleware (incorrectly located at `src/app/middleware.tsx`, should be at project root) intercepts all routes except static assets
+2. Middleware (`middleware.tsx` at project root) intercepts all routes except static assets and images
 3. User metadata (avatar_url, user_name, name) stored in Supabase Auth and passed to components
 
 ### Database Schema
@@ -79,6 +79,14 @@ Post interactions are handled via Server Actions:
 - Pattern: Check auth, toggle state (create or delete), no need for manual revalidation in most cases
 - Some forms also inline Server Actions (see `compose-post.tsx:19`)
 
+### State Management
+
+**Zustand Store (`src/app/store/posts-store.ts`):**
+- Client-side optimistic UI updates for posts
+- Functions: `setPosts()`, `addPost()`, `updatePost()`, `removePost()`, `updatePostInteraction()`
+- Used alongside Server Actions for immediate UI feedback before server confirmation
+- Tracks interaction states: likes, retweets, favorites with counts
+
 ### Routing
 
 - **Dynamic Routes**:
@@ -107,6 +115,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 - Shared utilities in `src/app/utils/`
 - Type definitions in `src/app/types/`
 - Components in `src/app/components/`
+- Zustand stores in `src/app/store/`
+- Path alias: `@/*` maps to `./src/*` (from tsconfig.json)
 
 ## Important Patterns
 
@@ -115,9 +125,6 @@ Many routes use `export const dynamic = 'force-dynamic'` to prevent static gener
 
 **Revalidation:**
 Use `revalidatePath('/')` from `next/cache` after mutations to update cached data.
-
-**Middleware Location Issue:**
-The middleware file is incorrectly located at `src/app/middleware.tsx` when it should be at the project root (`middleware.tsx`). This may cause issues in production.
 
 **NextUI Integration:**
 Dark mode enabled by default (`className="dark"` on html tag). NextUI provider wraps app in `src/app/providers.tsx`.

@@ -16,13 +16,16 @@ export function AuthButtonClient ({ user }: { user: User | null }) {
 
   const handleSignIn = async () => {
     try {
+      // Use the current origin to construct the redirect URL dynamically
+      const redirectUrl = `${window.location.origin}/auth/callback`
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: 'http://localhost:3000/auth/callback'
+          redirectTo: redirectUrl
         }
       })
-      
+
       if (error) throw error
     } catch (error) {
       console.error('Error during sign in:', error)
